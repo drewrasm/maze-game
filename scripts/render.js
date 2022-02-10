@@ -1,5 +1,3 @@
-// var ratio = 10 / mazeHeight
-
 let mazeHeight = 10;
 let mazeWidth = 10;
 

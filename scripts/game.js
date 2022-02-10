@@ -11,6 +11,7 @@ let goal;
 
 let showBreadCrumbs = false;
 let showHelp = false;
+let showPath = false;
 
 const up = () => {
   if(!position.top) {
@@ -63,12 +64,17 @@ function render() {
   clearMaze()
   renderMorty(goal)
   renderMaze(mazeGrid)
-  if(showHelp) {
+  if(showPath || showHelp) {
     fastestPath = getBestPath(position, goal)
+  }
+  if(showPath) {
     renderHelpPoints()
   }
   if(showBreadCrumbs) {
     renderHistoryPoints()
+  }
+  if(showHelp) {
+    renderHelpPoint(fastestPath[fastestPath.length - 2])
   }
   renderRick(position)
 }
@@ -124,6 +130,13 @@ window.addEventListener('keydown', (e) => {
   }
 })
 
+for(let b of document.getElementsByTagName('button')) {
+  b.addEventListener('click', (e) => {
+    initialize()
+    run()
+  })
+}
 
-initialize()
-run()
+
+// initialize()
+// run()
