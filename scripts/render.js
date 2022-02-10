@@ -13,27 +13,10 @@ const renderMaze = (maze) => {
         }
     }
 }
-window.renderMaze = renderMaze
-
-
-console.log(canvas)
 
 const clearMaze = () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
-
-
-// function drawRectangle(rect) {
-//     context.save();
-
-//     context.translate(rect.center.x, rect.center.y );
-//     context.translate(-rect.center.x, -rect.center.y);
-
-//     context.strokeStyle = rect.stroke;
-//     context.strokeRect((rect.center.x - rect.size.x / 2) + .5, (rect.center.y - rect.size.y / 2) + .5, rect.size.x, rect.size.y);
-
-//     context.restore();
-// }
 
 const drawCell = (cell) => {
     let x = cell.x == 0 ? 0 : cellWidth * cell.x
