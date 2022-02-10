@@ -1,5 +1,13 @@
+// var ratio = 10 / mazeHeight
+
+let mazeHeight = 10;
+let mazeWidth = 10;
+
+
 var cellWidth = 10;
 var cellHeight = 10;
+
+let ratio = cellWidth / mazeWidth
 
 var canvas = document.getElementById("id-canvas");
 var context = canvas.getContext("2d");
@@ -7,8 +15,8 @@ var context = canvas.getContext("2d");
 var morty = {
   imageSrc: "images/morty.png",
   center: { x: 50, y: 50 },
-  width: 75,
-  height: 75,
+  width: 75 * ratio,
+  height: 75 * ratio,
   rotation: 0,
   image: new Image(),
 };
@@ -16,8 +24,8 @@ morty.image.src = morty.imageSrc;
 var rick = {
   imageSrc: "images/rick.png",
   center: { x: 50, y: 50 },
-  width: 95,
-  height: 95,
+  width: 95 * ratio,
+  height: 95 * ratio,
   rotation: 0,
   image: new Image(),
 };
@@ -44,7 +52,7 @@ const drawCell = (cell) => {
 
   context.beginPath();
   context.strokeStyle = 'white'
-  context.lineWidth = 6;
+  context.lineWidth = 6 * ratio;
   context.moveTo(x, y);
 
   cell.top
@@ -106,8 +114,8 @@ const renderHelpPoint = (cell) => {
   let helpPoint = {
     imageSrc: "images/helpPoint.png",
     center: point,
-    width: 50,
-    height: 50,
+    width: 50 * ratio,
+    height: 50 * ratio,
     rotation: 0,
     image: new Image(),
   }
@@ -120,8 +128,8 @@ const renderHistoryPoint = (cell) => {
   let historyPoint = {
     imageSrc: "images/history.png",
     center: point,
-    width: 40,
-    height: 40,
+    width: 40 * ratio,
+    height: 40 * ratio,
     rotation: 0,
     image: new Image(),
   }

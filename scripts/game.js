@@ -1,9 +1,6 @@
 let lastTimeStamp = performance.now();
 let cancelNextRequest = true;
 
-let mazeHeight = 10;
-let mazeWidth = 10;
-
 let history = [];
 
 let fastestPath = [];
