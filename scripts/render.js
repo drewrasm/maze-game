@@ -100,3 +100,31 @@ const renderRick = (cell) => {
   setRick(point);
   drawTexture(rick);
 };
+
+const renderHelpPoint = (cell) => {
+  let point = {x: (cell.x * cellWidth) + cellWidth / 2, y: (cell.y * cellHeight) + cellHeight / 2}
+  let helpPoint = {
+    imageSrc: "images/helpPoint.png",
+    center: point,
+    width: 50,
+    height: 50,
+    rotation: 0,
+    image: new Image(),
+  }
+  helpPoint.image.src = helpPoint.imageSrc;
+  drawTexture(helpPoint);
+}
+
+const renderHistoryPoint = (cell) => {
+  let point = {x: (cell.x * cellWidth) + cellWidth / 2, y: (cell.y * cellHeight) + cellHeight / 2}
+  let historyPoint = {
+    imageSrc: "images/history.png",
+    center: point,
+    width: 40,
+    height: 40,
+    rotation: 0,
+    image: new Image(),
+  }
+  historyPoint.image.src = historyPoint.imageSrc;
+  drawTexture(historyPoint);
+}

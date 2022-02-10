@@ -12,44 +12,68 @@ let position;
 
 let goal;
 
+let showBreadCrumbs = false;
+let showHelp = false;
+
 const up = () => {
   if(!position.top) {
+    history.push(position)
     position = mazeGrid[position.x][position.y - 1]
   }
 }
 const down = () => {
   if(!position.bottom) {
+    history.push(position)
     position = mazeGrid[position.x][position.y + 1]
   }
 }
 const left = () => {
   if(!position.left) {
+    history.push(position)
     position = mazeGrid[position.x - 1][position.y]
   }
 }
 const right = () => {
   if(!position.right) {
+    history.push(position)
     position = mazeGrid[position.x + 1][position.y]
   }
 }
 const help = () => {
-  console.log('help')
+  showHelp = !showHelp
 }
 const breadcrumbs = () => {
-  console.log('breadcrumbs')
+  showBreadCrumbs = !showBreadCrumbs
 }
 const path = () => {
-  console.log('path')
+  showPath = !showPath
+}
+
+const renderHistoryPoints = () => {
+  for(let cell of history) {
+    renderHistoryPoint(cell)
+  }
+}
+const renderHelpPoints = () => {
+  for(let cell of fastestPath) {
+    renderHelpPoint(cell)
+  }
 }
 
 function update(elapsedTime) {}
 
 function render() {
   clearMaze()
-  console.log(position)
-  renderRick(position)
   renderMorty(goal)
   renderMaze(mazeGrid)
+  if(showHelp) {
+    fastestPath = getBestPath(position, goal)
+    renderHelpPoints()
+  }
+  if(showBreadCrumbs) {
+    renderHistoryPoints()
+  }
+  renderRick(position)
 }
 
 function gameLoop(time) {
