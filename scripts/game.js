@@ -1,17 +1,36 @@
 let lastTimeStamp = performance.now();
 let cancelNextRequest = true;
 
+let mazeHeight = 10;
+let mazeWidth = 10;
+
+let history = [];
+
+let fastestPath = [];
+
+let position;
+
+let goal;
+
 const up = () => {
-  console.log('up')
+  if(!position.top) {
+    position = mazeGrid[position.x][position.y - 1]
+  }
 }
 const down = () => {
-  console.log('down')
+  if(!position.bottom) {
+    position = mazeGrid[position.x][position.y + 1]
+  }
 }
 const left = () => {
-  console.log('left')
+  if(!position.left) {
+    position = mazeGrid[position.x - 1][position.y]
+  }
 }
 const right = () => {
-  console.log('right')
+  if(!position.right) {
+    position = mazeGrid[position.x + 1][position.y]
+  }
 }
 const help = () => {
   console.log('help')
@@ -25,13 +44,18 @@ const path = () => {
 
 function update(elapsedTime) {}
 
-function render() {}
+function render() {
+  clearMaze()
+  console.log(position)
+  renderRick(position)
+  renderMorty(goal)
+  renderMaze(mazeGrid)
+}
 
 function gameLoop(time) {
   let elapsedTime = time - lastTimeStamp;
   lastTimeStamp = time;
 
-  processInput(elapsedTime);
   update(elapsedTime);
   render();
 
@@ -40,7 +64,14 @@ function gameLoop(time) {
   }
 }
 
-function initialize() {}
+function initialize() {
+  clearMaze()
+  renderMaze(generate(mazeWidth, mazeHeight))
+  position = mazeGrid[0][0]
+  goal = mazeGrid[mazeWidth - 1][mazeHeight - 1]
+  history = []
+  fastestPath = []
+}
 
 function run() {
   lastTimeStamp = performance.now();
@@ -72,5 +103,6 @@ window.addEventListener('keydown', (e) => {
   }
 })
 
-let maze = generate(10, 10)
-renderMaze(maze)
+
+initialize()
+run()

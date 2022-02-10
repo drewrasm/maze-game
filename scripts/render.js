@@ -89,12 +89,14 @@ const setRick = (point, width = null, height = null) => {
   rick.height = height || rick.height;
 };
 
-const renderMorty = (point) => {
+const renderMorty = (cell) => {
+  let point = {x: (cell.x * cellWidth) + cellWidth / 2, y: (cell.y * cellHeight) + cellHeight / 2}
   setMorty(point);
   drawTexture(morty);
 };
 
-const renderRick = (point) => {
+const renderRick = (cell) => {
+  let point = {x: (cell.x * cellWidth) + cellWidth / 2, y: (cell.y * cellHeight) + cellHeight / 2}
   setRick(point);
   drawTexture(rick);
 };
