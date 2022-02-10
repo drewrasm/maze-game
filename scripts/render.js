@@ -43,6 +43,8 @@ const drawCell = (cell) => {
   context.save();
 
   context.beginPath();
+  context.strokeStyle = 'white'
+  context.lineWidth = 6;
   context.moveTo(x, y);
 
   cell.top
