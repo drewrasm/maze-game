@@ -1,8 +1,3 @@
-// console.log('hey!')
-// let m = generate(40, 40)
-// console.log(m)
-// renderMaze(m)
-
 function update(elapsedTime) {}
 
 function render() {}
