@@ -65,9 +65,7 @@ MyGame.graphics = (function () {
   const drawCell = (cell) => {
     let x = cell.x == 0 ? 0 : cellWidth * cell.x;
     let y = cell.y == 0 ? 0 : cellHeight * cell.y;
-    context.save();
 
-    context.beginPath();
     context.strokeStyle = "white";
     context.lineWidth = 2;
     context.moveTo(x, y);
@@ -86,6 +84,7 @@ MyGame.graphics = (function () {
   };
 
   const renderMaze = (maze) => {
+    context.beginPath()
     cellWidth = canvas.width / maze.length;
     cellHeight = canvas.height / maze[0].length;
     for (let row of maze) {
@@ -93,6 +92,7 @@ MyGame.graphics = (function () {
         drawCell(cell);
       }
     }
+    context.save()
   };
 
   const insertScores = () => {
