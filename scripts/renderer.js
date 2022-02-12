@@ -4,6 +4,10 @@ MyGame.graphics = (function () {
   let canvas = document.getElementById("id-canvas");
   let context = canvas.getContext("2d");
 
+  let scoreList = document.getElementById('id-scores')
+
+  let message = document.getElementById('id-message')
+
   let cellWidth = 10;
   let cellHeight = 10;
 
@@ -91,10 +95,28 @@ MyGame.graphics = (function () {
     }
   };
 
+  const insertScores = () => {
+    scoreList.innerHTML = ''
+    let scores = JSON.parse(localStorage.getItem('scores'))
+    if(scores !== null) {
+      for(let score of scores) {
+        let scoreDiv = document.createElement('div')
+        scoreDiv.innerHTML = score
+        scoreList.appendChild(scoreDiv)
+      }
+    }
+  }
+
+  const setMessage = (text) => {
+    message.innerHTML = text
+  }
+
   return {
     clear: clear,
     CellTexture: CellTexture,
     renderMaze: renderMaze,
+    insertScores: insertScores,
+    setMessage: setMessage,
     cellHeight: cellHeight,
     cellWidth: cellWidth,
   };

@@ -1,15 +1,13 @@
-body {
+html, body {
   height: 100%;
   margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .canvas {
-  width: 60%;
-  height: 60%;
-  border-style: solid;
-  border-width: 1px;
+  width: 70vh;
+  height: 70vh;
   display: block;
-  margin: auto;
   background-image: url("images/background.jpg");
   background-repeat: no-repeat;
   /* background-attachment: fixed; */
@@ -20,24 +18,29 @@ body {
   padding: 5px;
   border: 5px solid #fafd7cff;
   border-radius: 10px;
-  width: 18%;
+  width: 20%;
+  height: 75vh;
 }
 
 .controls-right {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
   padding: 5px;
   border: 5px solid #b7e4f9ff;
   border-radius: 10px;
-  width: 18%;
+  width: 20%;
+  height: 75vh;
 }
 
 .main-container {
+  justify-content: center;
   margin: auto;
   padding: 20px;
-  height: 100%;
-  width: 75%;
+  height: 78vh;
+  width: 90%;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
 }
 
 button {
@@ -55,4 +58,14 @@ button {
 
 button:hover {
   background-color: white;
+}
+
+.message {
+  font-size: 20px;
+  text-align: center;
+}
+
+.scores {
+  overflow-y: scroll;
+  overflow: scroll;
 }

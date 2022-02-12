@@ -1,47 +1,45 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Page Title</title>
-<link rel="stylesheet" href="main.css">
-</head>
-<body>
-    <div class='main-container'>
-        <div class='controls-left'>
-            <div>
-                <button value='5'>
-                    5X5
-                </button>
-                <button value='10'>
-                    10X10
-                </button>
-                <button value='15'>
-                    15X15
-                </button>
-                <button value='20'>
-                    20X20
-                </button>
-                <button value='30'>
-                    30X30
-                </button>
-            </div>
+  <head>
+    <title>Page Title</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="controls-left">
+        <div>
+          <button value="5">5X5</button>
+          <button value="10">10X10</button>
+          <button value="15">15X15</button>
+          <button value="20">20X20</button>
+          <button value="30">30X30</button>
         </div>
-        <canvas 
-            id='id-canvas'
-            width='1000' height='1000'
-            class='canvas'>
-        </canvas>
-        <div class='controls-right'>
-            <div>
-                Score: 20
-            </div>
+      </div>
+      <canvas id="id-canvas" width="1000" height="1000" class="canvas">
+      </canvas>
+      <div class="controls-right">
+        <div class='info'>
+          Time: <span id="id-time">0.0</span>
+          <br />
+          <br />
+          Shortcuts
+          <div>
+            b : breadcrumbs<br />
+            h : hint<br />
+            p : fastest path<br />
+          </div>
+          <br />
+          Scores:
         </div>
+        <div class="scores" id="id-scores"></div>
+      </div>
     </div>
+    <div class="message" id="id-message">Welcome, click a size to start!</div>
     <script>
-        MyGame = {}
+      MyGame = {};
     </script>
-</body>
-<script src='scripts/maze.js'></script>
-<script src='scripts/utils.js'></script>
-<script src='scripts/renderer.js'></script>
-<script src='scripts/game.js'></script>
-</html> 
+  </body>
+  <script src="scripts/maze.js"></script>
+  <script src="scripts/renderer.js"></script>
+  <script src="scripts/game.js"></script>
+</html>

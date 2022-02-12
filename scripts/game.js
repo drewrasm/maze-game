@@ -12,6 +12,9 @@ MyGame.game = (function (graphics, mazeGenerator) {
 
   let goal;
 
+  let gameTimer = 0;
+  let timerDisplay = document.getElementById("id-time");
+
   let showBreadCrumbs = false;
   let showHelp = false;
   let showPath = false;
@@ -41,6 +44,21 @@ MyGame.game = (function (graphics, mazeGenerator) {
     center: { x: 100, y: 100 },
     sizeRatio: 0.5,
   });
+
+  const storeScore = () => {
+    let scores = localStorage.getItem("scores");
+    if (scores !== null) {
+      scores = JSON.parse(scores);
+    } else {
+      scores = []
+    }
+    let scoreNum = (1000 - ((gameTimer/ 1000))) - history.length
+    scores.push(`size - ${dimensions}, score - ${scoreNum.toFixed(0)}`);
+    localStorage.setItem("scores", JSON.stringify(scores))
+    graphics.insertScores()
+    graphics.setMessage(`Wubba Lubba Dub Dub! Here\'s your score: ${scoreNum.toFixed(0)}`)
+  };
+  graphics.insertScores()
 
   const up = () => {
     if (!position.top) {
@@ -85,13 +103,19 @@ MyGame.game = (function (graphics, mazeGenerator) {
   };
 
   function update(elapsedTime) {
+    gameTimer += elapsedTime;
     rick.goTo(position);
     if (showPath || showHelp) {
       fastestPath = mazeGenerator.getBestPath(position, goal);
     }
+    if (position === goal) {
+      cancelNextRequest = true;
+      storeScore();
+    }
   }
 
   function render() {
+    timerDisplay.innerHTML = (gameTimer / 1000).toFixed(1);
     graphics.clear();
     morty.draw();
     graphics.renderMaze(maze);
@@ -129,6 +153,7 @@ MyGame.game = (function (graphics, mazeGenerator) {
   }
 
   function initialize() {
+    graphics.setMessage('SAVE MORTY!')
     maze = mazeGenerator.maze(dimensions, dimensions).generate();
     position = maze[0][0];
     goal = maze[maze.length - 1][maze[0].length - 1];
@@ -137,6 +162,9 @@ MyGame.game = (function (graphics, mazeGenerator) {
     rick.draw();
     morty.goTo(goal);
     morty.draw();
+    history = [];
+    fastestPath = [];
+    gameTimer = 0;
   }
 
   function run() {
