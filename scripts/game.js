@@ -2,8 +2,9 @@ MyGame.game = (function (graphics, mazeGenerator) {
   let lastTimeStamp = performance.now();
   let cancelNextRequest = true;
 
+  let dimensions = 10;
+
   let history = [];
-  let historyTextures = [];
 
   let fastestPath = [];
 
@@ -19,48 +20,56 @@ MyGame.game = (function (graphics, mazeGenerator) {
 
   let morty = graphics.CellTexture({
     imageSrc: "images/morty.png",
-    center: {x: 40, y: 40},
-    sizeRatio: .6
-  })
+    center: { x: 40, y: 40 },
+    sizeRatio: 0.6,
+  });
 
   let rick = graphics.CellTexture({
     imageSrc: "images/rick.png",
-    center: {x: 50, y: 50},
-    sizeRatio: .7
-  })
+    center: { x: 50, y: 50 },
+    sizeRatio: 0.7,
+  });
+
+  let helpPoint = graphics.CellTexture({
+    imageSrc: "images/helpPoint.png",
+    center: { x: 100, y: 100 },
+    sizeRatio: 0.5,
+  });
+
+  let historyPoint = graphics.CellTexture({
+    imageSrc: "images/history.png",
+    center: { x: 100, y: 100 },
+    sizeRatio: 0.5,
+  });
 
   const up = () => {
     if (!position.top) {
-      if(!history.includes(position)) {
+      if (!history.includes(position)) {
         history.push(position);
-        historyTextures.push(graphics.generateHistoryPoint(position))
       }
       position = mazeGrid[position.x][position.y - 1];
     }
   };
   const down = () => {
     if (!position.bottom) {
-      if(!history.includes(position)) {
+      if (!history.includes(position)) {
         history.push(position);
-        historyTextures.push(graphics.generateHistoryPoint(position))
       }
       position = mazeGrid[position.x][position.y + 1];
     }
   };
   const left = () => {
     if (!position.left) {
-      if(!history.includes(position)) {
+      if (!history.includes(position)) {
         history.push(position);
-        historyTextures.push(graphics.generateHistoryPoint(position))
       }
       position = mazeGrid[position.x - 1][position.y];
     }
   };
   const right = () => {
     if (!position.right) {
-      if(!history.includes(position)) {
+      if (!history.includes(position)) {
         history.push(position);
-        historyTextures.push(graphics.generateHistoryPoint(position))
       }
       position = mazeGrid[position.x + 1][position.y];
     }
@@ -75,33 +84,34 @@ MyGame.game = (function (graphics, mazeGenerator) {
     showPath = !showPath;
   };
 
-  const renderHelpPoints = () => {
-    for (let cell of fastestPath) {
-      renderHelpPoint(cell);
-    }
-  };
-
   function update(elapsedTime) {
-    rick.goTo(position)
+    rick.goTo(position);
+    if (showPath || showHelp) {
+      fastestPath = mazeGenerator.getBestPath(position, goal);
+    }
   }
 
   function render() {
-    graphics.clear()
-    morty.draw()
-    graphics.renderMaze(maze)
-    if (showPath || showHelp) {
-      fastestPath = getBestPath(position, goal);
-    }
+    graphics.clear();
+    morty.draw();
+    graphics.renderMaze(maze);
     if (showPath) {
-      renderHelpPoints();
+      for (let cell of fastestPath) {
+        helpPoint.goTo(cell);
+        helpPoint.draw();
+      }
     }
     if (showBreadCrumbs) {
-      for (let texture of historyTextures) {
-        texture.draw()
+      for (let cell of history) {
+        historyPoint.goTo(cell);
+        historyPoint.draw();
       }
     }
     if (showHelp) {
-      renderHelpPoint(fastestPath[fastestPath.length - 2]);
+      if (fastestPath.length > 1) {
+        helpPoint.goTo(fastestPath[fastestPath.length - 2]);
+        helpPoint.draw();
+      }
     }
     rick.draw();
   }
@@ -119,12 +129,14 @@ MyGame.game = (function (graphics, mazeGenerator) {
   }
 
   function initialize() {
-    // clearMaze();
-    // renderMaze(generate(mazeWidth, mazeHeight));
-    // position = mazeGrid[0][0];
-    // goal = mazeGrid[mazeWidth - 1][mazeHeight - 1];
-    // history = [];
-    // fastestPath = [];
+    maze = mazeGenerator.maze(dimensions, dimensions).generate();
+    position = maze[0][0];
+    goal = maze[maze.length - 1][maze[0].length - 1];
+    graphics.renderMaze(maze);
+    rick.goTo(position);
+    rick.draw();
+    morty.goTo(goal);
+    morty.draw();
   }
 
   function run() {
@@ -159,17 +171,9 @@ MyGame.game = (function (graphics, mazeGenerator) {
 
   for (let b of document.getElementsByTagName("button")) {
     b.addEventListener("click", (e) => {
-      graphics.clear()
-      let dimensions = Number(e.target.value)
-      maze = mazeGenerator.maze(dimensions, dimensions).generate()
-      position = maze[0][0]
-      goal = maze[maze.length - 1][maze[0].length - 1]
-      graphics.renderMaze(maze)
-      rick.goTo(position)
-      rick.draw()
-      morty.goTo(goal)
-      morty.draw()
-      // initialize();
+      graphics.clear();
+      dimensions = Number(e.target.value);
+      initialize();
       run();
     });
   }

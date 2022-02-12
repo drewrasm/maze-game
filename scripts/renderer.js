@@ -91,20 +91,10 @@ MyGame.graphics = (function () {
     }
   };
 
-  const generateHistoryPoint = (cell) => {
-    let point = CellTexture({
-      imageSrc: "images/history.png",
-      sizeRatio: .5,
-    })
-    point.goTo(cell)
-    return point
-  }
-
   return {
     clear: clear,
     CellTexture: CellTexture,
     renderMaze: renderMaze,
-    generateHistoryPoint: generateHistoryPoint,
     cellHeight: cellHeight,
     cellWidth: cellWidth,
   };
